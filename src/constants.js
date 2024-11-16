@@ -4,11 +4,11 @@
  * 
  *  Para acceder a una BD en la nube debes configurar un archivo .env
  */
-//const dbHost;
-//const dbPort;
-//const dbUser;
-//const dbPass;
-//const dbName;
+/*const dbHost = ;
+const dbPort = ;
+const dbUser = ;
+const dbPass = ;
+const dbName = ;*/
 
 // Configuración general del servidor
 const serverPort = 3000
@@ -21,9 +21,31 @@ const getPacientesById = '/getPacientes'
 const postPacientes = '/insertPacientes';
 
 // Pacientes DB Queries
-const selectPacientes = 'SELECT * FROM paciente';
-const selectPacientesById = 'SELECT * FROM paciente WHERE id_paciente between ? and ?';
-const insertPacientes = 'INSERT INTO paciente (nombre, edad, id_habitacion, id_andador) values (?, ?, ?, ?)';
+const selectPacientes = 'SELECT * FROM pacientes';
+const selectPacientesById = 'SELECT * FROM pacientes WHERE id_paciente between ? and ?';
+const insertPacientes = 'INSERT INTO pacientes (nombre, edad) values (?, ?)';
+
+// Entidad de habitaciones
+const getHabitacion = '/getHabitaciones'
+const getHabitacionById = '/getHabitaciones'
+const postHabitacion = '/insertHabitaciones';
+
+// Habitaciones DB Queries
+const selectHabitaciones = 'SELECT * FROM habitacion';
+const selectHabitacionesById = 'SELECT * FROM habitacion WHERE id_habitacion between ? and ?';
+const insertHabitaciones = 'INSERT INTO habitacion (id_habitacion, id_paciente) values (?, ?)';
+const CheckHabitacion = 'SELECT * FROM habitacion WHERE id_habitacion = ? OR id_paciente = ?';
+
+// Entidad andador
+const getAndador = '/getAndador'
+const getAndadorById = '/getAndador'
+const postAndador = '/insertAndador';
+
+// Habitaciones DB Queries
+const selectAndador = 'SELECT * FROM andador';
+const selectandadorById = 'SELECT * FROM andador WHERE id_andador between ? and ?';
+const insertAndador = 'INSERT INTO andador (id_andador, id_paciente) values (?, ?)';
+const CheckAndador = 'SELECT * FROM andador WHERE id_andador = ? OR id_paciente = ?';
 
 // SENSOR 1 URLS. Temperatura
 const getTemperatureSensor = '/getTemperatures'
@@ -94,5 +116,7 @@ module.exports= {
    getFotoresistencia, getFotoresistenciaByDate, postFotoresistencia, selectFotoresistencia, selectFotoresistenciaByDate, insertFotoresistencia, 
    getMovimiento, getMovimientoByDate, postMovimiento, selectMovimiento, selectMovimientoByDate, insertMovimiento, 
    getUltrasonicoAndador, getUltrasonicoAndadorByDate, postUltrasonicoAndador, selectDistanciasAndador, 
-   selectDistanciasAndadorByDate, insertDistanciasAndador
+   selectDistanciasAndadorByDate, insertDistanciasAndador, getHabitacion, getHabitacionById, postHabitacion, selectHabitaciones,
+   selectHabitacionesById, insertHabitaciones, CheckHabitacion, getAndador, getAndadorById, postAndador, selectAndador, selectandadorById,
+   insertAndador, CheckAndador
 }

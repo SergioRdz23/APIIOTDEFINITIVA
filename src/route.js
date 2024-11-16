@@ -2,7 +2,9 @@
 // Se registra en el router todos los métodos disponibles en cada controlador con una URL que haga mencion a dicha acción
 const constants = require("./constants")
 const express = require('express');
-const pacientesController = require('./RestControllers/Pacientes.js'); 
+const pacientesController = require('./RestControllers/Pacientes.js');
+const habitacionController = require('./RestControllers/Habitacion.js');
+const andadorController = require('./RestControllers/Andador.js');
 const temperaturaController = require('./RestControllers/sensorTemperatura.js'); 
 const ultrasonicofijoController = require('./RestControllers/sensorUltrasonicoFijo.js');
 const acelerometroController = require('./RestControllers/Acelerometro.js'); 
@@ -30,6 +32,16 @@ router.get("/",function(req,res){
 router.get(constants.contextURL + constants.api + constants.getPacientes, pacientesController.getLogPacientes);
 router.post(constants.contextURL + constants.api + constants.getPacientesById, pacientesController.getLogByIdPacientes);
 router.post(constants.contextURL + constants.api + constants.postPacientes,pacientesController.insertLogPacientes);
+
+// Entidad habitaciones
+router.get(constants.contextURL + constants.api + constants.getHabitacion, habitacionController.getLogHabitacion);
+router.post(constants.contextURL + constants.api + constants.getHabitacionById, habitacionController.getLogByIdHabitacion);
+router.post(constants.contextURL + constants.api + constants.postHabitacion,habitacionController.insertLogHabitacion);
+
+// Entidad andador
+router.get(constants.contextURL + constants.api + constants.getAndador, andadorController.getLogAndador);
+router.post(constants.contextURL + constants.api + constants.getAndadorById, andadorController.getLogByIdAndador);
+router.post(constants.contextURL + constants.api + constants.postAndador, andadorController.insertLogAndador);
 
 // Sensor de temperatura
 router.get(constants.contextURL + constants.api + constants.getTemperatureSensor, temperaturaController.getLogTemperatura);

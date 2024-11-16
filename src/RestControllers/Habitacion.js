@@ -4,12 +4,12 @@ const constants = require("../constants")
 
 
 /**
-  * Endpoint #1. getLogPacientes
+  * Endpoint #1. getLogHabitacion
   * 
-  * Este método realiza un select de todos los pacientes registrados ubicados en
-  * la tabla llamada "paciente".
+  * Este método realiza un select de todas las habitaciones registrados ubicados en
+  * la tabla llamada "habitacion".
   * 
-  * Resultado: Obtendrá los registros de la tabla "paciente" 
+  * Resultado: Obtendrá los registros de la tabla "habitacion" 
   * Todas las columnas están contempladas. 
   * 
   * Puedes sustituirla utilizando una proyección a tu tabla incluyendo las columnas que necesites.
@@ -17,10 +17,10 @@ const constants = require("../constants")
   * Te servirá para crear reportes especializados si utilizas algún metodo de despliegue web para los
   * Dashboards.
   */
-async function getLogPacientes(req,res){
+async function getLogHabitacion(req,res){
   try{
 
-    var sql = constants.selectPacientes;
+    var sql = constants.selectHabitaciones;
     var conn = mysql.getConnection();
     conn.connect((error)=>{
         if (error) throw error;
@@ -59,9 +59,9 @@ async function getLogPacientes(req,res){
   * Te servirá para crear reportes especializados si utilizas algún metodo de despliegue web para los
   * Dashboards.
   */
-async function getLogByIdPacientes(req,res){
+async function getLogByIdHabitacion(req,res){
   try{
-    var sql = constants.selectPacientesById;
+    var sql = constants.selectHabitacionesById;
 
     var id_one = req.body.id_one;
     var id_two = req.body.id_two;
@@ -92,48 +92,70 @@ async function getLogByIdPacientes(req,res){
 }
 
 /**
-  * Endpoint #3. insertLogAcelerometro
-  * Este método realiza un insert sobre la tabla "acelerometro".
+  * Endpoint #3. insertLogHabitacion
+  * Este método realiza un insert sobre la tabla "habitacion".
   */
-async function insertLogPacientes(req,res){
-  try{
+async function insertLogHabitacion(req, res) {
+  try {
+    const sqlInsert = constants.insertHabitaciones; // Consulta para insertar
+    const sqlCheck = constants.CheckHabitacion; // Consulta para verificar existencia
 
-    var sql = constants.insertPacientes;
+    const id_habitacion = req.body.id_habitacion;
+    const id_paciente = req.body.id_paciente;
 
-    //el valor se recibe en el cuerpo de correo
-    //cualquier dato que vaya a ir en el insert deberás guardarlo en una variable local
-    var nombre = req.body.nombre;
-    var edad = req.body.edad;
+    const conn = mysql.getConnection();
 
-    var conn = mysql.getConnection();
-    conn.connect((error)=>{
-        if (error) throw error;
+    conn.connect((error) => {
+      if (error) {
+        res.status(500);
+        res.send("Error al conectar con la base de datos.");
+        return;
+      }
 
-        // así mismo, cualquier dato que vaya a insertarse, deberá incluirse en
-        // los valores de los parámetros del Insert
-        var params = [nombre, edad]; 
-        conn.execute(sql, params, (error, data, fields) => {
+      // Verifica si la habitación o el paciente ya están asignados
+      const checkParams = [id_habitacion, id_paciente];
+      conn.execute(sqlCheck, checkParams, (error, data, fields) => {
+        if (error) {
+          res.status(500);
+          res.send(error.message);
+          conn.end(); // Asegura cerrar la conexión
+          return;
+        }
+
+        if (data.length > 0) {
+          // Si ya hay un conflicto, no se realiza el insert
+          res.status(400);
+          res.json({
+            status: 400,
+            message:
+              "La habitación ya tiene un paciente asignado o el paciente ya está asignado a otra habitación.",
+          });
+          conn.end(); // Asegura cerrar la conexión
+          return;
+        } else {
+          // Si no hay conflicto, realiza el insert
+          const insertParams = [id_habitacion, id_paciente];
+          conn.execute(sqlInsert, insertParams, (error, data) => {
             if (error) {
               res.status(500);
               res.send(error.message);
             } else {
-              console.log(data);
               res.json({
                 status: 200,
                 message: "Valor insertado",
                 affectedRows: data.affectedRows,
               });
             }
-            conn.end();
-        });
+            conn.end(); // Asegura cerrar la conexión después del insert
+          });
+        }
+      });
     });
-
-  }catch(error){
-    console.log(error)
-    res.status(500)
-    res.send(error)
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send(error.message);
   }
-  
 }
 
-module.exports = {insertLogPacientes, getLogPacientes,getLogByIdPacientes};
+module.exports = {insertLogHabitacion, getLogHabitacion,getLogByIdHabitacion};
