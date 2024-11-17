@@ -4,11 +4,11 @@
  * 
  *  Para acceder a una BD en la nube debes configurar un archivo .env
  */
-/*const dbHost = ;
-const dbPort = ;
-const dbUser = ;
-const dbPass = ;
-const dbName = ;*/
+/*const dbHost;
+const dbPort;
+const dbUser;
+const dbPass;
+const dbName*/
 
 // Configuración general del servidor
 const serverPort = 3000
@@ -55,7 +55,7 @@ const postTemperatureSensor = '/insertTemperature';
 // Temperaturas DB Queries
 const selectTemperature = 'SELECT * FROM sensor_temperatura ORDER BY id_temperatura DESC LIMIT 10';
 const selectTemperatureByDate = 'SELECT * FROM sensor_temperatura WHERE fecha between ? and ?';
-const insertTemperature = 'INSERT INTO sensor_temperatura (id_paciente,temperatura_celsius) values (?, ?)';
+const insertTemperature = 'INSERT INTO sensor_temperatura (id_habitacion,temperatura_celsius) values (?, ?)';
 
 // SENSOR 2 URLS. Ultrasonico Fijo
 const getUltrasonicoFijo = '/getDistanciasFijo'
@@ -65,7 +65,7 @@ const postUltrasonicoFijo = '/insertDistanciasFijo';
 // Ultrasonico Fijo DB Queries 
 const selectDistanciasFijo = 'SELECT * FROM sensor_ultrasonico_fijo ORDER BY id_distancia_fija DESC LIMIT 10';
 const selectDistanciasFijoByDate = 'SELECT * FROM sensor_ultrasonico_fijo WHERE fecha between ? and ?';
-const insertDistanciasFijo = 'INSERT INTO sensor_ultrasonico_fijo (id_paciente,distancia_fija_cm) values (?, ?)';
+const insertDistanciasFijo = 'INSERT INTO sensor_ultrasonico_fijo (id_habitacion,distancia_fija_cm) values (?, ?)';
 
 //SENSOR 3 URLS. Acelerometro
 const getAcelerometro = '/getAcelerometro'
@@ -75,7 +75,7 @@ const postAcelerometro = '/insertAcelerometro';
 // DB Queries Acelerometro
 const selectAcelerometro = 'SELECT * FROM acelerometro ORDER BY id_aceleracion DESC LIMIT 5';
 const selectAcelerometroByDate = 'SELECT * FROM acelerometro WHERE fecha between ? and ?';
-const insertAcelerometro = 'INSERT INTO acelerometro (id_paciente,aceleracion_g) values (?, ?)';
+const insertAcelerometro = 'INSERT INTO acelerometro (id_andador,aceleracion_g) values (?, ?)';
 
 // SENSOR 4 URLS. Fotoresistencia
 const getFotoresistencia = '/getFotoresistencia'
@@ -85,7 +85,7 @@ const postFotoresistencia = '/insertFotoresistencia';
 // Fotoresistencia DB Queries
 const selectFotoresistencia = 'SELECT * FROM fotoresistencia ORDER BY id_fotoresistencia DESC LIMIT 1';
 const selectFotoresistenciaByDate = 'SELECT * FROM fotoresistencia WHERE fecha between ? and ?';
-const insertFotoresistencia = 'INSERT INTO fotoresistencia (id_paciente,led_encendido) values (?, ?)';
+const insertFotoresistencia = 'INSERT INTO fotoresistencia (id_habitacion,led_encendido) values (?, ?)';
 
 // Sensor 5 URLS. Movimiento
 const getMovimiento = '/getMovimiento'
@@ -95,7 +95,7 @@ const postMovimiento = '/insertMovimiento';
 // DB Queries Movimiento
 const selectMovimiento = 'SELECT * FROM sensor_movimiento ORDER BY id_movimiento DESC LIMIT 1';
 const selectMovimientoByDate = 'SELECT * FROM sensor_movimiento WHERE fecha between ? and ?';
-const insertMovimiento = 'INSERT INTO sensor_movimiento (id_paciente,movimiento_detectado) values (?, ?)';
+const insertMovimiento = 'INSERT INTO sensor_movimiento (id_habitacion,movimiento_detectado) values (?, ?)';
 
 // Sensor 6 URLS. Ultrasonico Andador
 const getUltrasonicoAndador = '/getDistanciasAndador'
@@ -105,7 +105,7 @@ const postUltrasonicoAndador = '/insertDistanciasAndador';
 // DB Queries Movimiento
 const selectDistanciasAndador = 'SELECT * FROM sensor_ultrasonico_andador ORDER BY id_distancia_andador DESC LIMIT 10';
 const selectDistanciasAndadorByDate = 'SELECT * FROM sensor_ultrasonico_andador WHERE fecha between ? and ?';
-const insertDistanciasAndador = 'INSERT INTO sensor_ultrasonico_andador (id_paciente, distancia_andador_cm) values (?, ?)';
+const insertDistanciasAndador = 'INSERT INTO sensor_ultrasonico_andador (id_andador, distancia_andador_cm) values (?, ?)';
 
 module.exports= {
    dbHost,dbPort,dbUser,dbPass,dbName,serverPort, contextURL,api, getPacientes, getPacientesById, postPacientes, 

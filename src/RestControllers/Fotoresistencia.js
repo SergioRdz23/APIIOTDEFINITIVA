@@ -103,7 +103,7 @@ async function insertLogFotoresistencia(req,res){
 
     //el valor se recibe en el cuerpo de correo
     //cualquier dato que vaya a ir en el insert deberás guardarlo en una variable local
-    var id_paciente = req.body.id_paciente;
+    var id_habitacion = req.body.id_habitacion;
     var led_encendido = req.body.led_encendido;
 
     var conn = mysql.getConnection();
@@ -112,7 +112,7 @@ async function insertLogFotoresistencia(req,res){
 
         // así mismo, cualquier dato que vaya a insertarse, deberá incluirse en
         // los valores de los parámetros del Insert
-        var params = [id_paciente, led_encendido]; 
+        var params = [id_habitacion, led_encendido]; 
         conn.execute(sql, params, (error, data, fields) => {
             if (error) {
               res.status(500);

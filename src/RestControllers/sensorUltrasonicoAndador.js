@@ -108,7 +108,7 @@ async function insertLogUltrasonicoAndador(req,res){
 
     //el valor se recibe en el cuerpo de correo
     //cualquier dato que vaya a ir en el insert deberás guardarlo en una variable local
-    var id_paciente = req.body.id_paciente;
+    var id_andador = req.body.id_andador;
     var distancia_andador_cm = req.body.distancia_andador_cm;
     
     var conn = mysql.getConnection();
@@ -117,7 +117,7 @@ async function insertLogUltrasonicoAndador(req,res){
 
         // así mismo, cualquier dato que vaya a insertarse, deberá incluirse en
         // los valores de los parámetros del Insert
-        var params = [id_paciente, distancia_andador_cm]; 
+        var params = [id_andador, distancia_andador_cm]; 
         conn.execute(sql, params, (error, data, fields) => {
             if (error) {
               res.status(500);
